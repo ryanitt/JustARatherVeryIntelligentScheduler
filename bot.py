@@ -33,25 +33,12 @@ async def on_message(message):
     await client.process_commands(message)
     
 
-@client.command("status")
-async def status(context):
-    image = "YRoBE Ban.png" 
-    await context.send(file=discord.File(image))
-@client.command("traitor")
-async def traitor(context):
-    image = "nasus.png"
-    await context.send(file=discord.File(image))
-    await context.send("DDOS this bonobo plos avenge me.")
+
 @client.command("returnoftheking")
 async def returnoftheking(context):
     await context.send("https://support.riotgames.com/hc/en-us/requests/new")
     await context.send("Let's bring the king home!")
-@client.command("offense")
-async def offense(context):
-    with open("chat_log.txt") as f:
-        lines = f.readlines()
-    for i in lines:
-        await context.send(i)
+
    
 # My Help Button
 @client.command("commands")
