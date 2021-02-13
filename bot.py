@@ -18,21 +18,38 @@ async def on_ready():
     print('------')
 
 
+# @client.command()
+# async def setup1(ctx, *args):
+#     await ctx.send('Meeting Created!')
+#     await ctx.send("Time: " + args[0])
+#     await ctx.send("Location :" + args[1])
+#     args = list(args)
+#     args.pop(0)
+#     args.pop(0)
+#     for i in range(len(args)):
+#         await ctx.send('Name ' + str(i) + ' ' + args[i])
+#         i = i + 1
 @client.command()
 async def setup(ctx, *args):
-    await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
-    await ctx.send('Meeting Created!')
-    await ctx.send("Time:")
-    await ctx.send(args[0])
-    await ctx.send("Location:")
-    await ctx.send(args[1])
     args = list(args)
+    if len(args) == 0:
+        embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
+        embed.add_field(name="First Argument: Time", value="Please enter time as first argument in the form HH:MM")
+        embed.add_field(name="Second Argument: Location", value="Please enter location as second argument as one word or containted within " "")
+        embed.add_field(name="Additional Arguments: Names", value="You can enter as many names as you want as command line arguments after the first two.")
+        embed.add_field(name="When Ready", value="Create a meeting by using #setup time location names....")
+        await ctx.message.channel.send(embed=embed)
+    
+    embed = discord.Embed(title="Meeting Information", color=0xFF00FF)
+    embed.add_field(name="Time", value=args[0], inline=True)
+    embed.add_field(name="Location", value=args[1], inline=True)
     args.pop(0)
-    args.pop(1)
-    for i in range(len(args)):
-        await ctx.send('Name:')
-        await ctx.send(args[i])
-        i = i + 1
+    args.pop(0)
+    embed.add_field(name='Names',value=args,inline=True )
+
+    await ctx.message.channel.send(embed = embed)
+
+
 
 @client.command("meeting")
 async def meeting(context):
