@@ -17,6 +17,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
+
 @client.event
 async def on_reaction_add(reaction,user):
     channel = reaction.message.channel
@@ -27,6 +28,11 @@ async def on_reaction_remove(reaction,user):
     channel = reaction.message.channel
     await channel.send('{} has removed {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
 
+@client.command("hello")
+async def setup(context):
+    embedder = discord.Embed(title = "Greetings, my name is J.A.R.V.I.S. (Just A Rather Very Intelligent Scheduler)")
+    await context.message.channel.send(embed = embedder)
+    
 @client.command("setuphelp")
 async def setup(context):
     msg = client.get_channel(client_id)
