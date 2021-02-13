@@ -30,13 +30,15 @@ async def setup(context):
     msg = client.get_channel(client_id)
     embedder = discord.Embed(title="First Argument ", description="Time in form HH:MM (EG: 10:00pm)")
     embedder.add_field(name="Second Argument:", value="Server Name", inline=False)
-    embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name)", inline=False)
+    embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
+    embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
     await context.message.channel.send(embed = embedder)
 
 @client.command("meet")
-async def meet(context, time, svrname):
+async def meet(context, time, svrname, roles):
     await context.send(time)
     await context.send(svrname)
+    await context.send(roles)
 @client.command("meeting")
 async def meeting(context):
     await context.send("A meeting has been requested. React to this message to RSVP.")
