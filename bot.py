@@ -66,4 +66,8 @@ async def commands(context):
     helplist.add_field(name="offense", value = "Logs", inline=False)
     await context.message.channel.send(embed = helplist)
 #Run the client on the server
+<<<<<<< Updated upstream
 client.run(token)
+=======
+client.run('ODEwMjMxODk2NTI0MTkzODMz.YCgpQQ.cdHEjbXH518xmPIqAbuyidEO-4o')
+>>>>>>> Stashed changes
