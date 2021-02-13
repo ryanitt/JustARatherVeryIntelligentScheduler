@@ -10,7 +10,6 @@ token = input("Enter Token")
 
 @client.event
 async def on_ready():
-    #Do stuff/// (once bot is done I will need to change id channel)
     msg = client.get_channel(client_id)
     print('Logged in as')
     print(client.user.name)
