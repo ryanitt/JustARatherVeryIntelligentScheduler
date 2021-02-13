@@ -21,22 +21,15 @@ async def on_ready():
 
     #Do stuff/// (once bot is done I will need to change id channel)
     bot_test = client.get_channel(client_id)
-    await bot_test.send("RIP YROBE")
-    await bot_test.send("do <3commands to get started!")
+    await bot_test.send("Hello, I am JARVIS, your personal secretary.")
+    await bot_test.send("Input '?Meeting' inorder to set up a meeting with your peers)
 @client.event
 @client.event
 async def on_message(message):
 
-    if message.content == "Who is YRoBE?":
+    if message.content == "Meeting":
         bot_test = client.get_channel(client_id)
-        await bot_test.send("The Greatest League Player to ever live RIP </3")
-    elif message.content == "What is YRoBE?":
-        bot_test = client.get_channel(client_id)
-        await bot_test.send("Dead")
-    elif "Damroden" in message.content:
-        bot_test = client.get_channel(client_id)
-        await bot_test.send(":'(")
-    
+        await bot_test.send("A meeting has been requested. React to this message to RSVP")
     await client.process_commands(message)
     
 
