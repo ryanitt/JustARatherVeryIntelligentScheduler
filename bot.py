@@ -19,8 +19,20 @@ async def on_ready():
 
 
 @client.command()
-async def test(ctx, *args):
+async def setup(ctx, *args):
     await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
+    await ctx.send('Meeting Created!')
+    await ctx.send("Time:")
+    await ctx.send(args[0])
+    await ctx.send("Location:")
+    await ctx.send(args[1])
+    args = list(args)
+    args.pop(0)
+    args.pop(1)
+    for i in range(len(args)):
+        await ctx.send('Name:')
+        await ctx.send(args[i])
+        i = i + 1
 
 @client.command("meeting")
 async def meeting(context):
