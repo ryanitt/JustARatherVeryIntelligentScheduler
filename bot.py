@@ -5,6 +5,7 @@ from discord.ext import commands
 #client = discord.Client() #### old client getter
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
+client.remove_command("help")
 token = input("Enter Token")
 
 @client.command(name="version")
@@ -13,25 +14,16 @@ async def Version(context):
     embedder = discord.Embed(title="Current Version", description="Alpha")
     embedder.add_field(name="Version code:", value="Alpha.a.1", inline=False)
     embedder.add_field(name="Release Date", value="Feburary 2021", inline = False)
-
     await context.message.channel.send(embed = embedder)
 
 @client.event
 async def on_ready():
-
     #Do stuff/// (once bot is done I will need to change id channel)
     msg = client.get_channel(client_id)
-    await msg.send("Hello, I am JARVIS, your personal secretary.")
-    await msg.send("Input '#Meeting' inorder to set up a meeting with your peers")
-@client.event
-@client.event
-async def on_message(message):
-
-    if message.content == "Meeting":
-        msg = client.get_channel(client_id)
-        await msg.send("A meeting has been requested. React to this message to RSVP")
-    await client.process_commands(message)
-    
+    print('Logged in as')
+    print(client.user.name)
+    print(client.user.id)
+    print('------')
 
 @client.command("setup")
 async def setup(context):
@@ -44,13 +36,6 @@ async def setup(context):
 async def meeting(context):
     await context.send("A meeting has been requested. React to this message to RSVP.")
 
-
-@client.command("returnoftheking")
-async def returnoftheking(context):
-    await context.send("https://support.riotgames.com/hc/en-us/requests/new")
-    await context.send("Let's bring the king home!")
-
-   
 # My Help Button
 @client.command("commands")
 async def commands(context):
