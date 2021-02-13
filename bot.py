@@ -63,11 +63,6 @@ async def setup(context):
     await context.message.channel.send(embed = embedder)
 >>>>>>> Stashed changes
 
-@client.command("returnoftheking")
-async def returnoftheking(context):
-    await context.send("https://support.riotgames.com/hc/en-us/requests/new")
-    await context.send("Let's bring the king home!")
-
    
 # My Help Button
 @client.command("commands")
