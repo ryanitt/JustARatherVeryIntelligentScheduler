@@ -25,7 +25,9 @@ async def setup(context):
     embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
     embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
     await context.message.channel.send(embed = embedder)
-
+@client.command()
+async def test(ctx, *args):
+    await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
 @client.command("meet")
 async def meet(context, time, svrname, roles):
     await context.send(time)
