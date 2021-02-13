@@ -28,9 +28,9 @@ async def on_ready():
 @client.command("setup")
 async def setup(context):
     msg = client.get_channel(client_id)
-    embedder = discord.Embed(title="First Argument ", description="Time in form HH:MM(A/Pm)")
+    embedder = discord.Embed(title="First Argument ", description="Time in form HH:MM (EG: 10:00pm)")
     embedder.add_field(name="Second Argument:", value="Server Name", inline=False)
-    embedder.add_field(name="Finally: ", value="Please call #meeting with required args.", inline=False)
+    embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name)", inline=False)
     await context.message.channel.send(embed = embedder)
 
 @client.command("meet")
