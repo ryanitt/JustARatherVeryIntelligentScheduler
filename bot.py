@@ -33,6 +33,9 @@ async def on_message(message):
     await client.process_commands(message)
     
 
+@client.command("meeting")
+async def meeting(context):
+    await context.send("A meeting has been requested. React to this message to RSVP.")
 
 @client.command("returnoftheking")
 async def returnoftheking(context):
