@@ -5,6 +5,7 @@ from discord.ext import commands
 #client = discord.Client() #### old client getter
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
+client.remove_command("help")
 token = input("Enter Token")
 
 @client.command(name="version")
@@ -13,7 +14,6 @@ async def Version(context):
     embedder = discord.Embed(title="Current Version", description="Alpha")
     embedder.add_field(name="Version code:", value="Alpha.a.1", inline=False)
     embedder.add_field(name="Release Date", value="Feburary 2021", inline = False)
-
     await context.message.channel.send(embed = embedder)
 
 @client.event
