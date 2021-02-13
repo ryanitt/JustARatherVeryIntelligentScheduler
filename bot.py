@@ -22,7 +22,7 @@ async def on_ready():
     #Do stuff/// (once bot is done I will need to change id channel)
     bot_test = client.get_channel(client_id)
     await bot_test.send("Hello, I am JARVIS, your personal secretary.")
-    await bot_test.send("Input '?Meeting' inorder to set up a meeting with your peers)
+    await bot_test.send("Input '#Meeting' inorder to set up a meeting with your peers")
 @client.event
 @client.event
 async def on_message(message):
@@ -66,8 +66,4 @@ async def commands(context):
     helplist.add_field(name="offense", value = "Logs", inline=False)
     await context.message.channel.send(embed = helplist)
 #Run the client on the server
-<<<<<<< Updated upstream
 client.run(token)
-=======
-client.run('ODEwMjMxODk2NTI0MTkzODMz.YCgpQQ.cdHEjbXH518xmPIqAbuyidEO-4o')
->>>>>>> Stashed changes
