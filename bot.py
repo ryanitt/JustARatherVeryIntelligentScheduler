@@ -17,22 +17,11 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-
-# @client.command()
-# async def setup1(ctx, *args):
-#     await ctx.send('Meeting Created!')
-#     await ctx.send("Time: " + args[0])
-#     await ctx.send("Location :" + args[1])
-#     args = list(args)
-#     args.pop(0)
-#     args.pop(0)
-#     for i in range(len(args)):
-#         await ctx.send('Name ' + str(i) + ' ' + args[i])
-#         i = i + 1
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
-    if len(args) == 0:
+    for_ryan = args
+    if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
         embed.add_field(name="First Argument: Time", value="Please enter time as first argument in the form HH:MM")
         embed.add_field(name="Second Argument: Location", value="Please enter location as second argument as one word or containted within " "")
