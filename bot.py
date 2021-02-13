@@ -17,7 +17,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-@client.command("setup")
+@client.command("setuphelp")
 async def setup(context):
     msg = client.get_channel(client_id)
     embedder = discord.Embed(title="First Argument ", description="Time in form HH:MM (EG: 10:00pm)")
