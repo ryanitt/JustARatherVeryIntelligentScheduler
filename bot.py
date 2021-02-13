@@ -7,17 +7,12 @@ token = input("Enter Token")
 
 @client.event
 async def on_ready():
-<<<<<<< HEAD
-    #Do stuff/// (once bot is done I will need to change id channel)
-=======
->>>>>>> catch-up
     msg = client.get_channel(client_id)
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
 
-<<<<<<< HEAD
 
 @client.event
 async def on_reaction_add(reaction,user):
@@ -42,7 +37,6 @@ async def setup(context):
     embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
     embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
     await context.message.channel.send(embed = embedder)
-=======
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
@@ -64,24 +58,11 @@ async def setup(ctx, *args):
     embed.add_field(name='Names',value=args,inline=True )
     await ctx.message.channel.send(embed = embed)
 
->>>>>>> catch-up
 
-@client.command("meet")
-async def meet(context, time, svrname, roles):
-    await context.send(time)
-    await context.send(svrname)
-    await context.send(roles)
 @client.command("meeting")
 async def meeting(context):
     await context.send("A meeting has been requested. React to this message to RSVP.")
 
-<<<<<<< HEAD
-=======
-@client.command("meeting")
-async def meeting(context):
-    await context.send("A meeting has been requested. React to this message to RSVP.")
-
->>>>>>> catch-up
 # My Help Button
 @client.command("commands")
 async def commands(context):
