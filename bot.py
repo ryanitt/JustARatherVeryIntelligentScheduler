@@ -5,7 +5,7 @@ from discord.ext import commands
 #client = discord.Client() #### old client getter
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
-             
+token = input("Enter Token")
 
 @client.command(name="version")
 async def Version(context):
@@ -66,4 +66,4 @@ async def commands(context):
     helplist.add_field(name="offense", value = "Logs", inline=False)
     await context.message.channel.send(embed = helplist)
 #Run the client on the server
-client.run('')
+client.run(token)
