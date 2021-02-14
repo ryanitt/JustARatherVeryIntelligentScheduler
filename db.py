@@ -4,10 +4,10 @@ class DataBase:
 
     def __init__(self):
         self.mydb = mysql.connector.connect(
-                    host="127.0.0.1",
+                    host="localhost",
                     user="root",
-                    password="M10lbj7aj28",
-                    database="jarvis"
+                    password="vanessa123",
+                    database="jarvisfc"
                     )
         self.mycursor = self.mydb.cursor()
 
@@ -45,26 +45,26 @@ class DataBase:
                             );")
             print('created persons')
 
-    def createAttendenceTable(self):
+    def createAttendanceTable(self):
         created = False
         self.mycursor.execute("SHOW TABLES")
         for x in self.mycursor:
-            if(x[0] == 'attendence'):
+            if(x[0] == 'attendance'):
                 created = True
 
         if not created:
-            self.mycursor.execute("CREATE TABLE attendence (\
+            self.mycursor.execute("CREATE TABLE attendance (\
                             pNo VARCHAR(255),\
                             mNo INTEGER,\
                             PRIMARY KEY (pNo, mNo),\
                             FOREIGN KEY(mNo) REFERENCES meetings(id)\
                             );")      
-            print('created attendence')
+            print('created attendance')
 
     def createTables(self):
         self.createMeetingsTable()
         self.createPersonsTable()
-        self.createAttendenceTable()
+        self.createAttendanceTable()
 
     def createMeeting(self, name, Y, M, D, h, m):
         meeting_date = datetime.datetime(Y, M, D, hour=h, minute=m).strftime('%Y-%m-%d %H:%M:%S')
@@ -84,14 +84,14 @@ class DataBase:
         print(sql, val)
         self.mycursor.execute(sql, val)
 
-    def createAttendence(self, disc, meetingName):
+    def createAttendance(self, disc, meetingName):
         sql  = "SELECT * FROM meetings WHERE name = %s"
         tpc = (meetingName,)
         self.mycursor.execute(sql, tpc)
         meeting = self.mycursor.fetchone()
         print(meeting)
 
-        sql = "INSERT INTO attendence (pNo, mNo) VALUES (%s, %s)"
+        sql = "INSERT INTO attendance (pNo, mNo) VALUES (%s, %s)"
         val = (disc, meeting[0])
         print(sql, val)
         self.mycursor.execute(sql, val)
@@ -118,9 +118,9 @@ if __name__ == "__main__":
     db.createPerson("<@!216745727857131520>")
     db.createPerson("<@!128311377767956481>")
     
-    db.createAttendence("<@!103683474916925440>", "meeting 1")
-    db.createAttendence("<@!216745727857131520>", "meeting 3")
-    db.createAttendence("<@!128311377767956481>", "meeting 2")
-    db.createAttendence("<@!216745727857131520>", "meeting 4")
+    db.createAttendance("<@!103683474916925440>", "meeting 1")
+    db.createAttendance("<@!216745727857131520>", "meeting 3")
+    db.createAttendance("<@!128311377767956481>", "meeting 2")
+    db.createAttendance("<@!216745727857131520>", "meeting 4")
     db.showInfo()
     db.saveToDB()
