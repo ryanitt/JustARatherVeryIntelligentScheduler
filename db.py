@@ -5,11 +5,11 @@ class DataBase:
     def __init__(self):
         self.mydb = mysql.connector.connect(
                     host="127.0.0.1",
-                    user="root",
-                    password="M10lbj7aj28",
-                    database="jarvis"
+                    user="mainAd",
+                    password="K3nnyisjeonmayer",
+                    database="jarvisfc"
                     )
-        self.mycursor = self.mydb.cursor()
+        self.mycursor = self.mydb.cursor(buffered=True)
 
     def saveToDB(self):
         self.mycursor.execute("COMMIT;")
@@ -66,12 +66,12 @@ class DataBase:
         self.createPersonsTable()
         self.createAttendenceTable()
 
-    def createMeeting(self, name, Y, M, D, h, m):
-        meeting_date = datetime.datetime(Y, M, D, hour=h, minute=m).strftime('%Y-%m-%d %H:%M:%S')
-        print(meeting_date)
-        sql = "INSERT INTO meetings (name, time) VALUES (%s, %s);"
-        val = (name, meeting_date)
-        self.mycursor.execute(sql, val)
+    # def createMeeting(self, name, Y, M, D, h, m):
+    #     meeting_date = datetime.datetime(Y, M, D, hour=h, minute=m).strftime('%Y-%m-%d %H:%M:%S')
+    #     print(meeting_date)
+    #     sql = "INSERT INTO meetings (name, time) VALUES (%s, %s);"
+    #     val = (name, meeting_date)
+    #     self.mycursor.execute(sql, val)
 
     def createMeeting(self, name, time):
         sql = "INSERT INTO meetings (name, time) VALUES (%s, %s);"
@@ -79,19 +79,34 @@ class DataBase:
         self.mycursor.execute(sql, val)
 
     def createPerson(self, disc):
+        if disc[0:3] != "<@!":
+            print("not a valid client ID: ", disc)
+            return
+        sql = "SELECT * FROM persons WHERE clientID = %s"
+        val = (disc,)
+        self.mycursor.execute(sql, val)
+
+        if(self.mycursor.rowcount > 0):
+            print("person already exists: ", disc)
+            return
+
+
         sql = "INSERT INTO persons (clientID) VALUES (%s)"
         val = (disc,)
         print(sql, val)
         self.mycursor.execute(sql, val)
 
     def createAttendence(self, disc, meetingName):
+        if disc[0:3] != "<@!":
+            print("not a valid client ID: ", disc)
+            return
         sql  = "SELECT * FROM meetings WHERE name = %s"
         tpc = (meetingName,)
         self.mycursor.execute(sql, tpc)
         meeting = self.mycursor.fetchone()
         print(meeting)
 
-        sql = "INSERT INTO attendence (pNo, mNo) VALUES (%s, %s)"
+        sql = "INSERT IGNORE INTO attendence (pNo, mNo) VALUES (%s, %s)"
         val = (disc, meeting[0])
         print(sql, val)
         self.mycursor.execute(sql, val)
