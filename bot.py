@@ -11,47 +11,21 @@ disc_client = discord.Client()
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
 client.remove_command("help")
-token = input("Enter Token")
+token = input("Enter Token: ")
 status = discord.Game("#commands for help")
-
-@client.event
-async def on_message(message):
-    if message.author == disc_client.user:
-        return
-    if message.content.startswith('Hello'):
-        msg = ' {0.author.mention} Greetings, my name is J.A.R.V.I.S. (Just A Rather Very Intelligent Scheduler)'.format(message)
-        await message.channel.send(msg)
-        return
-    if message.content.startswith('Who is on'):
-        msg = ' {0.author.mention} I am currently running'.format(message)
-        await message.channel.send(msg)
-        return
 
 def setupDB():
     database.createTables()
-    # database.createMeeting("meeting 1", 1997, 1, 31, 13, 45)
-    # database.createMeeting("meeting 2", 1998, 2, 1, 7, 30)
-    # database.createMeeting("meeting 3", 1999, 3, 2, 2, 00)
-    # database.createMeeting("meeting 4", 2000, 4, 3, 15, 15)
-    # database.createPerson("<@!103683474916925440>")
-    # database.createPerson("<@!216745727857131520>")
-    # database.createPerson("<@!128311377767956481>")
-    
-    # database.createAttendance("<@!103683474916925440>", "meeting 1")
-    # database.createAttendance("<@!216745727857131520>", "meeting 3")
-    # database.createAttendance("<@!128311377767956481>", "meeting 2")
-    # database.createAttendance("<@!216745727857131520>", "meeting 4")
-    # database.showInfo()
     database.saveToDB()
 
 @client.event
 async def on_ready():
     msg = client.get_channel(client_id)
-    await client.change_presence(status=discord.Status.idle, activity=status)
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
+    await client.change_presence(status=discord.Status.idle, activity=status)
     setupDB()
 
 @client.event
@@ -62,14 +36,20 @@ async def on_reaction_add(reaction,user):
     print(user.name)
     if reaction.emoji != '🥰':
         return
-    await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
+    ID = "<@!" + str(user.id) + ">"
+    if(database.isInvited(ID, reaction.message.embeds[0].fields[1].value)):
+        await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
     print(user)
+    
+
+    database.changeStatus(ID, reaction.message.embeds[0].fields[1].value, "yes")
+
 
 @client.event
 async def on_reaction_remove(reaction,user):
     channel = reaction.message.channel
     await channel.send('{} has removed {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
-    
+
 async def reminder(ctx,l):
     print(l)
     set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")

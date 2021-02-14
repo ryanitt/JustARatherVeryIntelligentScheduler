@@ -105,9 +105,9 @@ class DataBase:
         meeting = self.mycursor.fetchone()
         # print(meeting)
 
-        sql = "INSERT INTO attendance (pNo, mNo, status) VALUES (%s, %s, 'maybe')"
-        val = (disc, meeting[0])
-        # print(sql, val)
+        sql = "INSERT INTO attendance (pNo, mNo, status) VALUES (%s, %s, %s)"
+        val = (disc, meeting[0], "maybe")
+        print(sql, val)
         self.mycursor.execute(sql, val)
 
     def changeStatus(self, disc, meetingName, newStatus):
@@ -121,6 +121,28 @@ class DataBase:
         val = (newStatus, disc, meeting[0])
         print(sql, val)
         self.mycursor.execute(sql, val)
+
+        self.mydb.commit()
+
+        print(self.mycursor.rowcount, " record(s) changed")
+        
+    def isInvited(self, disc, meetingName):
+        sql  = "SELECT * FROM meetings WHERE name = %s"
+        tpc = (meetingName,)
+        self.mycursor.execute(sql, tpc)
+        meeting = self.mycursor.fetchone()
+        print(meeting)
+
+        sql = "SELECT * FROM attendance WHERE pNo = %s AND mNo = %s"
+        val = (disc, meeting[0])
+        print(sql, val)
+        self.mycursor.execute(sql, val)
+
+        if(self.mycursor.rowcount > 0):
+            return True
+
+        return False
+
 
 
     def showInfo(self):
