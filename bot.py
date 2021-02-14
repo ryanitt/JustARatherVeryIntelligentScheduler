@@ -44,8 +44,11 @@ async def on_reaction_add(reaction,user):
         return
     print(user.name)
     if reaction.emoji != '🥰':
+        await reaction.message.remove_reaction(reaction.emoji, user)
         return
+    
     await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
+    
     print(user)
 
 @client.event
