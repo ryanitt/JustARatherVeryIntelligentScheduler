@@ -40,7 +40,12 @@ async def on_ready():
 @client.event
 async def on_reaction_add(reaction,user):
     channel = reaction.message.channel
-    await channel.send('{} has added {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
+    if user.name == "J.A.R.V.I.S.":
+        return
+    print(user.name)
+    if reaction.emoji != '🥰':
+        return
+    await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
     print(user)
 
 @client.event
@@ -90,7 +95,9 @@ async def setup(ctx, *args):
     args.pop(0)
     args.pop(0)
     embed.add_field(name='Names',value= split(args) ,inline=True)
-    await ctx.message.channel.send(embed = embed)
+    embed.set_footer(text="Please react " + '🥰' + "if you are able to attend!")
+    msg = await ctx.message.channel.send(embed = embed)
+    await msg.add_reaction('🥰')
     
 
 @client.command()
