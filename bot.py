@@ -29,6 +29,22 @@ def setupDB():
     # database.createAttendence("<@!216745727857131520>", "meeting 4")
     # database.showInfo()
     database.saveToDB()
+    
+def sendtoDB(l):
+    print(l)
+    set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
+    initial_time = dt.datetime.now()
+    wait = (set_time - initial_time).total_seconds()
+    time.sleep(wait)
+    print("reminder")
+    
+
+            
+def split(names):
+    all = ''
+    for i in names:
+        all = all + i
+    return all
 
 @client.event
 async def on_ready():
@@ -56,21 +72,6 @@ async def setup(context):
     await context.message.channel.send(embed = embedder)
     
     
-def sendtoDB(l):
-    print(l)
-    set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
-    initial_time = dt.datetime.now()
-    wait = (set_time - initial_time).total_seconds()
-    time.sleep(wait)
-    print("reminder")
-    
-
-            
-def split(names):
-    all = ''
-    for i in names:
-        all = all + i
-    return all
 
 @client.command()
 async def setup(ctx, *args):
