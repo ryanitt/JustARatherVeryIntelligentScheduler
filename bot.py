@@ -28,22 +28,6 @@ def setupDB():
     # database.createAttendance("<@!216745727857131520>", "meeting 4")
     # database.showInfo()
     database.saveToDB()
-    
-# def sendtoDB(l):
-#     print(l)
-#     set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
-#     initial_time = dt.datetime.now()
-#     wait = (set_time - initial_time).total_seconds()
-#     time.sleep(wait)
-#     print("reminder")
-    
-
-            
-# def split(names):
-#     all = ''
-#     for i in names:
-#         all = all + i
-#     return all
 
 @client.event
 async def on_ready():
@@ -53,7 +37,6 @@ async def on_ready():
     print(client.user.id)
     print('------')
     setupDB()
-
 
 @client.event
 async def on_reaction_add(reaction,user):
@@ -89,8 +72,6 @@ def split(names):
 async def setup(ctx, *args):
     args = list(args)
     print(args)
-    # for_ryan = args
-    # sendtoDB(for_ryan)
     if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
         embed.add_field(name="First Argument: Date Time", value="Please enter date-time value (year-month-day hour:minute")
@@ -113,11 +94,18 @@ async def setup(ctx, *args):
     await ctx.message.channel.send(embed = embed)
 
 @client.command()
-async def meeting(ctx):
+async def schedule(ctx):
     embed = discord.Embed(title="Displaying current meetings", color=0xFF00FF)
-    #
-    #for i in database.showINFO?
-        #embed.add_field(name="Meeting: " + i, ...)
+    meetingsList = database.displayMeetings().split("\n")
+    topic = ""
+    date = ""
+    for i in meetingsList:
+        tempList = i.split(" ")
+        topic = topic + tempList[0] + "\n"
+        date = date + tempList[1] + tempList[2] + "\n"
+    embed.add_field(name="Meeting Topic", value=topic, inline=True)
+    embed.add_field(name="Date-Time", value=date, inline=True)
+    await ctx.message.channel.send(embed=embed)
 
 # My Help Button
 @client.command("commands")
