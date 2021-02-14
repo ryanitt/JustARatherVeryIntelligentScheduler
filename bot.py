@@ -1,6 +1,11 @@
 import discord
 import datetime as dt
 from discord.ext import commands
+import db 
+
+database = db.DataBase()
+
+
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
 client.remove_command("help")
@@ -14,15 +19,33 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
+def setupDB():
+    database = db.DataBase()
+    database.createTables()
+    database.createMeeting("meeting 1", 1997, 1, 31, 13, 45)
+    database.createMeeting("meeting 2", 1998, 2, 1, 7, 30)
+    database.createMeeting("meeting 3", 1999, 3, 2, 2, 00)
+    database.createMeeting("meeting 4", 2000, 4, 3, 15, 15)
+    database.createPerson("Question", "0874")
+    database.createPerson("Rice", "2405")
+    database.createPerson("FunkyPants4457", "6186")
+    database.createPerson("chendaddy15", "6336")
+    database.createPerson("Kurozinx", "7652")
+    database.createAttendence("Rice", "2405", "meeting 1")
+    database.showInfo()
+    database.saveToDB()
+
+
 def sendtoDB(l):
-    print(l)
-    print(l[0])
-    print(dt.datetime.now().strftime("%Y-%m-%d %H:%M"))
-    run = True
-    while True:
-        if dt.datetime.now().strftime("%Y-%m-%d %H:%M") == l[0]:
+    # print(l)
+    # print(l[0])
+    # print(dt.datetime.now().strftime("%Y-%m-%d %H:%M"))
+    # run = True
+    # while True:
+    #     if dt.datetime.now().strftime("%Y-%m-%d %H:%M") == l[0]:
             
-            break
+    #         break
+    pass
             
 def split(names):
     all = ''
@@ -47,20 +70,20 @@ async def setup(context):
     embedder = discord.Embed(title = "Greetings, my name is J.A.R.V.I.S. (Just A Rather Very Intelligent Scheduler)")
     await context.message.channel.send(embed = embedder)
     
-@client.command("setuphelp")
-async def setup(context):
-    msg = client.get_channel(client_id)
-    embedder = discord.Embed(title="First Argument ", description="Time in form HH:MM (EG: 10:00pm)")
-    embedder.add_field(name="Second Argument:", value="Server Name", inline=False)
-    embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
-    embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
-    await context.message.channel.send(embed = embedder)
+# @client.command("setuphelp")
+# async def setup(context):
+#     msg = client.get_channel(client_id)
+#     embedder = discord.Embed(title="First Argument ", description="Time in form HH:MM (EG: 10:00pm)")
+#     embedder.add_field(name="Second Argument:", value="Server Name", inline=False)
+#     embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
+#     embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
+#     await context.message.channel.send(embed = embedder)
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
-    print(args[0],args[1])
-    for_ryan = args
-    sendtoDB(for_ryan)
+    print(args)
+    # for_ryan = args
+    # sendtoDB(for_ryan)
     if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
         embed.add_field(name="First Argument: Date Time", value="Please enter date-time value (year-month-day hour:minute")
@@ -74,6 +97,7 @@ async def setup(ctx, *args):
     embed.add_field(name="Location", value=args[1], inline=True)
     args.pop(0)
     args.pop(0)
+    print(split(args))
     embed.add_field(name='Names',value= split(args) ,inline=True)
     await ctx.message.channel.send(embed = embed)
 
