@@ -5,6 +5,7 @@ import time
 from discord import message
 from discord.enums import Status
 from discord.ext import commands
+import asyncio
 import db
 
 database = db.DataBase()
@@ -54,13 +55,15 @@ async def on_reaction_remove(reaction,user):
     channel = reaction.message.channel
     await channel.send('{} has removed {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
 
-async def reminder(ctx,l):
+async def reminder(ctx, l):
     print(l)
     set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
     initial_time = dt.datetime.now()
     wait = (set_time - initial_time).total_seconds()
-    time.sleep(wait)
-    await ctx.channel.send("Reminder!")
+    wait -= 600 
+    await asyncio.sleep(wait)
+    embed = discord.Embed(title="NOTICE: You Have a Meeting Scheduled in 10 Minutes.")
+    await ctx.message.channel.send(embed=embed)
 
 def split(names):
     all = ''
@@ -71,7 +74,7 @@ def split(names):
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
-    print(args)
+    copy = args[:]
     if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
         embed.add_field(name="First Argument: Date Time", value="Please enter date-time value (year-month-day hour:minute")
@@ -94,6 +97,7 @@ async def setup(ctx, *args):
     embed.set_footer(text="Please react " + '🥰' + "if you are able to attend!")
     msg = await ctx.message.channel.send(embed = embed)
     await msg.add_reaction('🥰')
+    await reminder(ctx, copy)
 
 @client.command()
 async def allSchedule(ctx):
