@@ -11,7 +11,7 @@ disc_client = discord.Client()
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
 client.remove_command("help")
-token = input("Enter Token")
+token = input("Enter Token: ")
 status = discord.Game("#commands for help")
 
 def setupDB():
