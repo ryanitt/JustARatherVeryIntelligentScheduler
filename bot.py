@@ -1,5 +1,6 @@
 import discord
 import datetime as dt
+import time
 from discord.ext import commands
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
@@ -16,13 +17,13 @@ async def on_ready():
 
 def sendtoDB(l):
     print(l)
-    print(l[0])
-    print(dt.datetime.now().strftime("%Y-%m-%d %H:%M"))
-    run = True
-    while True:
-        if dt.datetime.now().strftime("%Y-%m-%d %H:%M") == l[0]:
-            
-            break
+    set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
+    initial_time = dt.datetime.now()
+    wait = (set_time - initial_time).total_seconds()
+    time.sleep(wait)
+    print("reminder")
+    
+
             
 def split(names):
     all = ''
