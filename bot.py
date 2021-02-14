@@ -115,7 +115,7 @@ async def setup(ctx, *args):
 @client.command()
 async def allSchedule(ctx):
     embed = discord.Embed(title="Displaying current meetings", color=0xFF00FF)
-    meetingsList = database.allDisplayMeetings().split("\n")
+    meetingsList = database.displayAllMeetings().split("\n")
     topic = ""
     date = ""
     for i in meetingsList:
@@ -125,6 +125,22 @@ async def allSchedule(ctx):
     embed.add_field(name="Meeting Topic", value=topic, inline=True)
     embed.add_field(name="Date-Time", value=date, inline=True)
     await ctx.message.channel.send(embed=embed)
+
+@client.command()
+async def mySchedule(ctx, user):
+    embed = discord.Embed(title="Displaying Personal Meetings", color=0xFF00FF)
+    ID = "<@!" + str(user.id) + ">"
+    meetingsList = database.personalMeetings(ID).split("\n")
+    name = ""
+    date = ""
+    for i in meetingsList:
+        tempList = i.split(" ")
+        topic = topic + tempList[0] + "\n"
+        date = date + tempList[1] + tempList[2] + "\n"
+    embed.add_field(name="Meeting Topic", value=topic, inline=True)
+    embed.add_field(name="Date-Time", value=date, inline=True)
+    await ctx.message.channel.send(embed=embed)
+
 
 # My Help Button
 @client.command("commands")
