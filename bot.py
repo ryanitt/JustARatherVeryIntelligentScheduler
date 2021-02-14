@@ -83,7 +83,7 @@ async def reminder(ctx, l):
 
 async def printreminder(ctx, wait):
     time.sleep(wait)
-    embed = discord.Embed(title="NOTICE: You Have a Meeting Scheduled in Ten Minutes.")
+    embed = discord.Embed(title="NOTICE: You Have a Meeting Scheduled in 10 Minutes.")
     await ctx.message.channel.send(embed=embed)
 
 
