@@ -36,9 +36,11 @@ async def on_reaction_add(reaction,user):
     print(user.name)
     if reaction.emoji != '🥰':
         return
-    await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
-    print(user)
     ID = "<@!" + str(user.id) + ">"
+    if(database.isInvited(ID, reaction.message.embeds[0].fields[1].value)):
+        await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
+    print(user)
+    
 
     database.changeStatus(ID, reaction.message.embeds[0].fields[1].value, "yes")
 

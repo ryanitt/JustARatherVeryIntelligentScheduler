@@ -133,6 +133,23 @@ class DataBase:
 
         print(self.mycursor.rowcount, " record(s) changed")
         
+    def isInvited(self, disc, meetingName):
+        sql  = "SELECT * FROM meetings WHERE name = %s"
+        tpc = (meetingName,)
+        self.mycursor.execute(sql, tpc)
+        meeting = self.mycursor.fetchone()
+        print(meeting)
+
+        sql = "SELECT * FROM attendance WHERE pNo = %s AND mNo = %s"
+        val = (disc, meeting[0])
+        print(sql, val)
+        self.mycursor.execute(sql, val)
+
+        if(self.mycursor.rowcount > 0):
+            return True
+
+        return False
+
 
 
     def showInfo(self):
