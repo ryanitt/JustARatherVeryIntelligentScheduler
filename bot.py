@@ -30,6 +30,31 @@ def split(names):
         all = all + i
     return all
 
+
+@client.event
+async def on_reaction_add(reaction,user):
+    channel = reaction.message.channel
+    await channel.send('{} has added {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
+    print(user)
+
+@client.event
+async def on_reaction_remove(reaction,user):
+    channel = reaction.message.channel
+    await channel.send('{} has removed {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
+
+@client.command("hello")
+async def setup(context):
+    embedder = discord.Embed(title = "Greetings, my name is J.A.R.V.I.S. (Just A Rather Very Intelligent Scheduler)")
+    await context.message.channel.send(embed = embedder)
+    
+@client.command("setuphelp")
+async def setup(context):
+    msg = client.get_channel(client_id)
+    embedder = discord.Embed(title="First Argument ", description="Time in form HH:MM (EG: 10:00pm)")
+    embedder.add_field(name="Second Argument:", value="Server Name", inline=False)
+    embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
+    embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
+    await context.message.channel.send(embed = embedder)
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
@@ -51,6 +76,7 @@ async def setup(ctx, *args):
     args.pop(0)
     embed.add_field(name='Names',value= split(args) ,inline=True)
     await ctx.message.channel.send(embed = embed)
+
 
 @client.command("meeting")
 async def meeting(context):
