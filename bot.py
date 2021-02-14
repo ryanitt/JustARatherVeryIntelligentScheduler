@@ -1,6 +1,8 @@
+from os import name
 import discord
 import datetime as dt
 import time
+from discord import message
 from discord.enums import Status
 from discord.ext import commands
 import db
@@ -39,11 +41,13 @@ async def on_reaction_add(reaction,user):
     ID = "<@!" + str(user.id) + ">"
     if(database.isInvited(ID, reaction.message.embeds[0].fields[1].value)):
         await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
+        embed = discord.Embed(title="Meeting Confirmation", color=0x00FF00)
+        embed.add_field(name=reaction.message.embeds[0].fields[0].name, value=reaction.message.embeds[0].fields[0].value)
+        embed.add_field(name=reaction.message.embeds[0].fields[1].name, value=reaction.message.embeds[0].fields[1].value)
+        embed.add_field(name=reaction.message.embeds[0].fields[2].name, value=reaction.message.embeds[0].fields[2].value)
+        await user.send("",embed=embed)
     print(user)
-    
-
     database.changeStatus(ID, reaction.message.embeds[0].fields[1].value, "yes")
-
 
 @client.event
 async def on_reaction_remove(reaction,user):
@@ -90,7 +94,6 @@ async def setup(ctx, *args):
     embed.set_footer(text="Please react " + '🥰' + "if you are able to attend!")
     msg = await ctx.message.channel.send(embed = embed)
     await msg.add_reaction('🥰')
-    
 
 @client.command()
 async def schedule(ctx):
