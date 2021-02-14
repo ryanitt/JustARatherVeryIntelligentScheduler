@@ -114,7 +114,7 @@ async def commands(context):
     helplist = discord.Embed(title="Commands", description="Prefix for all commands is #", color=0xFF00FF)
     helplist.add_field(name="commands", value="Shows commands.", inline=True)
     helplist.add_field(name="setup", value = "Commands for setting up group meetings", inline=False)
-    helplist.add_field(name="meeting", value="Command to view or edit ongoing meetings", inline=False)
+    helplist.add_field(name="schedule", value="Command to view upcoming meetings in order (soonest to furthest)", inline=False)
     await context.message.channel.send(embed = helplist)
 #Run the client on the server
 client.run(token)
