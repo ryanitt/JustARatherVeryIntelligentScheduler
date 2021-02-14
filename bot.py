@@ -22,10 +22,10 @@ def setupDB():
     # database.createPerson("<@!216745727857131520>")
     # database.createPerson("<@!128311377767956481>")
     
-    # database.createAttendence("<@!103683474916925440>", "meeting 1")
-    # database.createAttendence("<@!216745727857131520>", "meeting 3")
-    # database.createAttendence("<@!128311377767956481>", "meeting 2")
-    # database.createAttendence("<@!216745727857131520>", "meeting 4")
+    # database.createAttendance("<@!103683474916925440>", "meeting 1")
+    # database.createAttendance("<@!216745727857131520>", "meeting 3")
+    # database.createAttendance("<@!128311377767956481>", "meeting 2")
+    # database.createAttendance("<@!216745727857131520>", "meeting 4")
     # database.showInfo()
     database.saveToDB()
     
@@ -102,7 +102,7 @@ async def setup(ctx, *args):
         database.createMeeting(args[1], args[0])
         for p in args[2:]:
             database.createPerson(p)
-            database.createAttendence(p, args[1])
+            database.createAttendance(p, args[1])
         database.saveToDB()
     embed = discord.Embed(title="Meeting Information", color=0xFF00FF)
     embed.add_field(name="Date-Time", value=args[0], inline=True)
