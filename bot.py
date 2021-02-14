@@ -18,6 +18,7 @@ async def on_ready():
 async def on_reaction_add(reaction,user):
     channel = reaction.message.channel
     await channel.send('{} has added {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
+    print(user)
 
 @client.event
 async def on_reaction_remove(reaction,user):
