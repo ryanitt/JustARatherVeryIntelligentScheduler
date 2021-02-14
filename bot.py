@@ -1,4 +1,6 @@
 import discord
+import datetime as dt
+import time
 from discord.ext import commands
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
@@ -38,11 +40,28 @@ async def setup(context):
     embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
     embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
     await context.message.channel.send(embed = embedder)
+def sendtoDB(l):
+    print(l)
+    set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
+    initial_time = dt.datetime.now()
+    wait = (set_time - initial_time).total_seconds()
+    time.sleep(wait)
+    print("reminder")
+    
+
+            
+def split(names):
+    all = ''
+    for i in names:
+        all = all + i
+    return all
+
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
+    print(args[0],args[1])
     for_ryan = args
-    print(for_ryan)
+    sendtoDB(for_ryan)
     if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
         embed.add_field(name="First Argument: Date Time", value="Please enter date-time value (year-month-day hour:minute")
@@ -56,7 +75,7 @@ async def setup(ctx, *args):
     embed.add_field(name="Location", value=args[1], inline=True)
     args.pop(0)
     args.pop(0)
-    embed.add_field(name='Names',value=args,inline=True )
+    embed.add_field(name='Names',value= split(args) ,inline=True)
     await ctx.message.channel.send(embed = embed)
 
 
