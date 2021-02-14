@@ -6,7 +6,6 @@ import db
 
 database = db.DataBase()
 
-
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
 client.remove_command("help")
@@ -36,9 +35,7 @@ def sendtoDB(l):
     wait = (set_time - initial_time).total_seconds()
     time.sleep(wait)
     print("reminder")
-    
-
-            
+     
 def split(names):
     all = ''
     for i in names:
@@ -53,7 +50,6 @@ async def on_ready():
     print(client.user.id)
     print('------')
     setupDB()
-
 
 @client.event
 async def on_reaction_add(reaction,user):
