@@ -1,4 +1,5 @@
 import discord
+import datetime as dt
 from discord.ext import commands
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
@@ -13,11 +14,22 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
+def sendtoDB(l):
+    print(l)
+    print(l[0])
+    print(dt.datetime.now().strftime("%Y-%m-%d %H:%M"))
+    run = True
+    while True:
+        if dt.datetime.now().strftime("%Y-%m-%d %H:%M") == l[0]:
+            
+            break
+            
+
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
     for_ryan = args
-    print(for_ryan)
+    sendtoDB(for_ryan)
     if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
         embed.add_field(name="First Argument: Date Time", value="Please enter date-time value (year-month-day hour:minute")
@@ -34,6 +46,8 @@ async def setup(ctx, *args):
     embed.add_field(name='Names',value=args,inline=True )
     await ctx.message.channel.send(embed = embed)
 
+
+    
 
 
 @client.command("meeting")
