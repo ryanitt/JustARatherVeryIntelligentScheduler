@@ -5,8 +5,8 @@ class DataBase:
     def __init__(self):
         self.mydb = mysql.connector.connect(
                     host="localhost",
-                    user="root",
-                    password="Bestintentions56*",
+                    user="mainAd",
+                    password="K3nnyisjeonmayer",
                     database="jarvisfc"
                     )
         self.mycursor = self.mydb.cursor(buffered=True)
@@ -133,7 +133,7 @@ class DataBase:
 
         print(self.mycursor.rowcount, " record(s) changed")
         
-    def isInvited(self, disc, meetingName):
+    def isNotConfirmed(self, disc, meetingName):
         sql  = "SELECT * FROM meetings WHERE name = %s"
         tpc = (meetingName,)
         self.mycursor.execute(sql, tpc)
@@ -146,7 +146,9 @@ class DataBase:
         self.mycursor.execute(sql, val)
 
         if(self.mycursor.rowcount > 0):
-            return True
+            confirm = self.mycursor.fetchone()
+            if(confirm[-1] == "maybe"):
+                return True
 
         return False
 

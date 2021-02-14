@@ -39,7 +39,7 @@ async def on_reaction_add(reaction,user):
     if reaction.emoji != '🥰':
         return
     ID = "<@!" + str(user.id) + ">"
-    if(database.isInvited(ID, reaction.message.embeds[0].fields[1].value)):
+    if(database.isNotConfirmed(ID, reaction.message.embeds[0].fields[1].value)):
         await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
         embed = discord.Embed(title="Meeting Confirmation", color=0x00FF00)
         embed.add_field(name=reaction.message.embeds[0].fields[0].name, value=reaction.message.embeds[0].fields[0].value)
