@@ -1,6 +1,7 @@
 import discord
 import datetime as dt
 import time
+from discord.enums import Status
 from discord.ext import commands
 import db
 
@@ -11,6 +12,7 @@ client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
 client.remove_command("help")
 token = input("Enter Token")
+status = discord.Game("#commands for help")
 
 @client.event
 async def on_message(message):
@@ -45,6 +47,7 @@ def setupDB():
 @client.event
 async def on_ready():
     msg = client.get_channel(client_id)
+    await client.change_presence(status=discord.Status.idle, activity=status)
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
