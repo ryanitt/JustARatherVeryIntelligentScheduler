@@ -179,19 +179,3 @@ class DataBase:
 
 if __name__ == "__main__":
     db = DataBase()
-    # db.createTables()
-    # db.createMeeting("test", datetime.datetime(2021, 2, 14, hour=16, minute=30).strftime('%Y-%m-%d %H:%M:%S'))
-    # db.saveToDB()
-    # db.createMeeting("testLater", datetime.datetime(2021, 3, 14, hour=16, minute=30).strftime('%Y-%m-%d %H:%M:%S'))
-    # db.saveToDB()
-    # db.createAttendance("<@!103683474916925440>", "test")
-    # db.saveToDB()
-    # db.createAttendance("<@!103683474916925440>", "testLater")
-    # db.saveToDB
-    # db.changeStatus("<@!103683474916925440>", "test", "yes")
-    # db.saveToDB()
-    # db.changeStatus("<@!103683474916925440>", "testLater", "yes")
-    # db.saveToDB()
-    # db.showInfo()
-    # print(db.displayAllMeetings())
-    # print(db.personalMeetings('<@!103683474916925440>'))
