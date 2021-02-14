@@ -5,8 +5,8 @@ class DataBase:
     def __init__(self):
         self.mydb = mysql.connector.connect(
                     host="localhost",
-                    user="mainAd",
-                    password="K3nnyisjeonmayer",
+                    user="root",
+                    password="vanessa123",
                     database="jarvisfc"
                     )
         self.mycursor = self.mydb.cursor(buffered=True)
@@ -67,13 +67,6 @@ class DataBase:
         self.createPersonsTable()
         self.createAttendanceTable()
 
-    # def createMeeting(self, name, Y, M, D, h, m):
-    #     meeting_date = datetime.datetime(Y, M, D, hour=h, minute=m).strftime('%Y-%m-%d %H:%M:%S')
-    #     print(meeting_date)
-    #     sql = "INSERT INTO meetings (name, time) VALUES (%s, %s);"
-    #     val = (name, meeting_date)
-    #     self.mycursor.execute(sql, val)
-
     def createMeeting(self, name, time):
         sql = "SELECT * FROM meetings WHERE name = %s"
         val = (name,)
@@ -110,7 +103,7 @@ class DataBase:
         tpc = (meetingName,)
         self.mycursor.execute(sql, tpc)
         meeting = self.mycursor.fetchone()
-        print(meeting)
+        # print(meeting)
 
         sql = "INSERT INTO attendance (pNo, mNo, status) VALUES (%s, %s, %s)"
         val = (disc, meeting[0], "maybe")
@@ -163,7 +156,7 @@ class DataBase:
         for x in self.mycursor:
             print(x)
 
-    def displayMeetings(self):
+    def displayAllMeetings(self):
         self.mycursor.execute("SELECT * FROM meetings ORDER BY time")
         returnStr = ""
         for x in self.mycursor:
@@ -172,24 +165,33 @@ class DataBase:
         
         return returnStr.rstrip()
 
+    def personalMeetings(self, client_id):
+        sql = "SELECT name, time FROM meetings INNER JOIN attendance ON mNo = id WHERE status = 'yes' AND pNo = %s ORDER BY time"
+        val = (client_id, )
+        self.mycursor.execute(sql, val)
+        returnStr = ""
+        for x in self.mycursor:
+            x = list(x)
+            returnStr += x[0] + " " + x[1].strftime("%m/%d/%Y, %H:%M") + "\n"
+        return returnStr.rstrip()
+
 
 
 if __name__ == "__main__":
     db = DataBase()
-    db.createTables()
-    db.createMeeting("test", datetime.datetime(2021, 2, 14, hour=16, minute=30).strftime('%Y-%m-%d %H:%M:%S'))
-    db.createMeeting("testLater", datetime.datetime(2021, 3, 14, hour=16, minute=30).strftime('%Y-%m-%d %H:%M:%S'))
-    # db.createMeeting("meeting 2", 1998, 2, 1, 7, 30)
-    # db.createMeeting("meeting 3", 1999, 3, 2, 2, 00)
-    # db.createMeeting("meeting 4", 2000, 4, 3, 15, 15)
-    # db.createPerson("<@!103683474916925440>")
-    # db.createPerson("<@!216745727857131520>")
-    # db.createPerson("<@!128311377767956481>")
-    
-    # db.createAttendance("<@!103683474916925440>", "meeting 1")
-    # db.createAttendance("<@!216745727857131520>", "meeting 3")
-    # db.createAttendance("<@!128311377767956481>", "meeting 2")
-    # db.createAttendance("<@!216745727857131520>", "meeting 4")
-    # db.showInfo()
+    # db.createTables()
+    # db.createMeeting("test", datetime.datetime(2021, 2, 14, hour=16, minute=30).strftime('%Y-%m-%d %H:%M:%S'))
     # db.saveToDB()
-    print(db.displayMeetings())
+    # db.createMeeting("testLater", datetime.datetime(2021, 3, 14, hour=16, minute=30).strftime('%Y-%m-%d %H:%M:%S'))
+    # db.saveToDB()
+    # db.createAttendance("<@!103683474916925440>", "test")
+    # db.saveToDB()
+    # db.createAttendance("<@!103683474916925440>", "testLater")
+    # db.saveToDB
+    # db.changeStatus("<@!103683474916925440>", "test", "yes")
+    # db.saveToDB()
+    # db.changeStatus("<@!103683474916925440>", "testLater", "yes")
+    # db.saveToDB()
+    # db.showInfo()
+    # print(db.displayAllMeetings())
+    # print(db.personalMeetings('<@!103683474916925440>'))

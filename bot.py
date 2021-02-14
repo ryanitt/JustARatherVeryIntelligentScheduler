@@ -96,9 +96,9 @@ async def setup(ctx, *args):
     await msg.add_reaction('🥰')
 
 @client.command()
-async def schedule(ctx):
+async def allSchedule(ctx):
     embed = discord.Embed(title="Displaying current meetings", color=0xFF00FF)
-    meetingsList = database.displayMeetings().split("\n")
+    meetingsList = database.displayAllMeetings().split("\n")
     topic = ""
     date = ""
     for i in meetingsList:
@@ -109,6 +109,24 @@ async def schedule(ctx):
     embed.add_field(name="Date-Time", value=date, inline=True)
     await ctx.message.channel.send(embed=embed)
 
+@client.command()
+async def mySchedule(ctx):
+    embed = discord.Embed(title="Displaying Personal Meetings", color=0xFF00FF)
+    ID = "<@!" + str(ctx.message.author.id) + ">"
+    # print(ID)
+    meetingsList = database.personalMeetings(ID).split("\n")
+    topic = ""
+    date = ""
+    for i in meetingsList:
+        tempList = i.split(" ")
+        # print(tempList)
+        topic = topic + tempList[0] + "\n"
+        date = date + tempList[1] + tempList[2] + "\n"
+    embed.add_field(name="Meeting Topic", value=topic, inline=True)
+    embed.add_field(name="Date-Time", value=date, inline=True)
+    await ctx.message.channel.send(embed=embed)
+
+
 # My Help Button
 @client.command("commands")
 async def commands(context):
@@ -116,7 +134,8 @@ async def commands(context):
     helplist = discord.Embed(title="Commands", description="Prefix for all commands is #", color=0xFF00FF)
     helplist.add_field(name="commands", value="Shows commands.", inline=True)
     helplist.add_field(name="setup", value = "Commands for setting up group meetings", inline=False)
-    helplist.add_field(name="schedule", value="Command to view upcoming meetings in order (soonest to furthest)", inline=False)
+    helplist.add_field(name="allSchedule", value="Command to view all upcoming meetings in order (soonest to furthest)", inline=False)
+    helplist.add_field(name="mySchedule", value="Command to view personal upcoming confirmed meetings (soonest to furthest).", inline=False)
     await context.message.channel.send(embed = helplist)
 #Run the client on the server
 client.run(token)
