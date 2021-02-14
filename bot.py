@@ -6,10 +6,24 @@ import db
 
 database = db.DataBase()
 
+disc_client = discord.Client()
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
 client.remove_command("help")
 token = input("Enter Token")
+
+@client.event
+async def on_message(message):
+    if message.author == disc_client.user:
+        return
+    if message.content.startswith('Hello'):
+        msg = ' {0.author.mention} Greetings, my name is J.A.R.V.I.S. (Just A Rather Very Intelligent Scheduler)'.format(message)
+        await message.channel.send(msg)
+        return
+    if message.content.startswith('Who is on'):
+        msg = ' {0.author.mention} I am currently running'.format(message)
+        await message.channel.send(msg)
+        return
 
 def setupDB():
     database.createTables()
@@ -47,11 +61,6 @@ async def on_reaction_add(reaction,user):
 async def on_reaction_remove(reaction,user):
     channel = reaction.message.channel
     await channel.send('{} has removed {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
-
-@client.command("hello")
-async def setup(context):
-    embedder = discord.Embed(title = "Greetings, my name is J.A.R.V.I.S. (Just A Rather Very Intelligent Scheduler)")
-    await context.message.channel.send(embed = embedder)
     
 async def reminder(ctx,l):
     print(l)
