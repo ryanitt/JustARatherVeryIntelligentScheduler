@@ -91,6 +91,7 @@ async def setup(ctx, *args):
     args.pop(0)
     embed.add_field(name='Names',value= split(args) ,inline=True)
     await ctx.message.channel.send(embed = embed)
+    
 
 @client.command()
 async def schedule(ctx):
