@@ -1,6 +1,7 @@
 import discord
 import datetime as dt
 import time
+from discord.enums import Status
 from discord.ext import commands
 import db
 
@@ -24,6 +25,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    await client.change_presence(status=discord.Status.idle, activity=status)
     setupDB()
 
 @client.event
