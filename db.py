@@ -5,8 +5,8 @@ class DataBase:
     def __init__(self):
         self.mydb = mysql.connector.connect(
                     host="localhost",
-                    user="mainAd",
-                    password="K3nnyisjeonmayer",
+                    user="root",
+                    password="vanessa123",
                     database="jarvisfc"
                     )
         self.mycursor = self.mydb.cursor(buffered=True)

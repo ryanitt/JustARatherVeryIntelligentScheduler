@@ -58,8 +58,10 @@ async def reminder(ctx,l):
     set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
     initial_time = dt.datetime.now()
     wait = (set_time - initial_time).total_seconds()
+    wait -= 600 
     time.sleep(wait)
-    await ctx.channel.send("Reminder!")
+    embed = discord.Embed(title="NOTICE: You Have a Meeting Scheduled in Ten Minutes.")
+    await ctx.message.channel.send(embed=embed)
 
 def split(names):
     all = ''
@@ -71,6 +73,8 @@ def split(names):
 async def setup(ctx, *args):
     args = list(args)
     print(args)
+    copy = args
+    reminder(ctx, copy)
     if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
         embed.add_field(name="First Argument: Date Time", value="Please enter date-time value (year-month-day hour:minute")
