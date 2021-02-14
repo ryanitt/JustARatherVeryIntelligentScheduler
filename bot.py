@@ -40,6 +40,7 @@ async def setup(context):
     embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
     embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
     await context.message.channel.send(embed = embedder)
+    
 def sendtoDB(l):
     print(l)
     set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
