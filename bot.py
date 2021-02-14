@@ -51,14 +51,11 @@ async def reminder(ctx, l):
     initial_time = dt.datetime.now()
     wait = (set_time - initial_time).total_seconds()
     wait -= 600 
-    await printreminder(ctx,wait)
-
-async def printreminder(ctx, wait):
-    embed = discord.Embed(title="NOTICE: You Have a Meeting Scheduled in 10 Minutes.")
-    await ctx.message.channel.send(embed=embed)
-    t = threading.Timer(wait, await printreminder(ctx, wait) )
-    t.start()
+    time.sleep(wait)
     
+
+d = threading.thread(name = 'reminder', target = reminder)
+d.start()
 
 
 def split(names):
