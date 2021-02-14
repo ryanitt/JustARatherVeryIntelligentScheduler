@@ -5,8 +5,8 @@ class DataBase:
     def __init__(self):
         self.mydb = mysql.connector.connect(
                     host="localhost",
-                    user="root",
-                    password="vanessa123",
+                    user="mainAd",
+                    password="K3nnyisjeonmayer",
                     database="jarvisfc"
                     )
         self.mycursor = self.mydb.cursor(buffered=True)
@@ -111,7 +111,7 @@ class DataBase:
         meeting = self.mycursor.fetchone()
         print(meeting)
 
-        sql = "INSERT INTO attendence (pNo, mNo) VALUES (%s, %s)"
+        sql = "INSERT INTO attendance (pNo, mNo) VALUES (%s, %s)"
         val = (disc, meeting[0])
         print(sql, val)
         self.mycursor.execute(sql, val)
