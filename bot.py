@@ -1,5 +1,6 @@
 import discord
 import datetime as dt
+import time
 from discord.ext import commands
 import db 
 
@@ -37,25 +38,6 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-    setupDB()
-
-def sendtoDB(l):
-    # print(l)
-    # print(l[0])
-    # print(dt.datetime.now().strftime("%Y-%m-%d %H:%M"))
-    # run = True
-    # while True:
-    #     if dt.datetime.now().strftime("%Y-%m-%d %H:%M") == l[0]:
-            
-    #         break
-    pass
-            
-def split(names):
-    all = ''
-    for i in names:
-        all = all + i
-    return all
-
 
 @client.event
 async def on_reaction_add(reaction,user):
@@ -73,14 +55,23 @@ async def setup(context):
     embedder = discord.Embed(title = "Greetings, my name is J.A.R.V.I.S. (Just A Rather Very Intelligent Scheduler)")
     await context.message.channel.send(embed = embedder)
     
-# @client.command("setuphelp")
-# async def setup(context):
-#     msg = client.get_channel(client_id)
-#     embedder = discord.Embed(title="First Argument ", description="Time in form HH:MM (EG: 10:00pm)")
-#     embedder.add_field(name="Second Argument:", value="Server Name", inline=False)
-#     embedder.add_field(name="Third Argument:", value="Roles of people requested for meeting.", inline=False)
-#     embedder.add_field(name="Finally: ", value="Please call #meeting as (#meeting time server_name roles)", inline=False)
-#     await context.message.channel.send(embed = embedder)
+    
+def sendtoDB(l):
+    print(l)
+    set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
+    initial_time = dt.datetime.now()
+    wait = (set_time - initial_time).total_seconds()
+    time.sleep(wait)
+    print("reminder")
+    
+
+            
+def split(names):
+    all = ''
+    for i in names:
+        all = all + i
+    return all
+
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
