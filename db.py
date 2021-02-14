@@ -112,8 +112,8 @@ class DataBase:
         meeting = self.mycursor.fetchone()
         print(meeting)
 
-        sql = "INSERT INTO attendance (pNo, mNo, status) VALUES (%s, %s, maybe)"
-        val = (disc, meeting[0])
+        sql = "INSERT INTO attendance (pNo, mNo, status) VALUES (%s, %s, %s)"
+        val = (disc, meeting[0], "maybe")
         print(sql, val)
         self.mycursor.execute(sql, val)
 
