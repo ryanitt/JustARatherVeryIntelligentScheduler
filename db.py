@@ -6,7 +6,7 @@ class DataBase:
         self.mydb = mysql.connector.connect(
                     host="127.0.0.1",
                     user="root",
-                    password="Bestintentions56*",
+                    password="M10lbj7aj28",
                     database="jarvis"
                     )
         self.mycursor = self.mydb.cursor()
