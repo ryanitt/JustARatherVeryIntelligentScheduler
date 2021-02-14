@@ -7,6 +7,7 @@ from discord.enums import Status
 from discord.ext import commands
 import asyncio
 import db
+import re
 
 database = db.DataBase()
 
@@ -33,6 +34,8 @@ async def on_ready():
 
 @client.event
 async def on_reaction_add(reaction,user):
+    # print(user)
+    # print(type(user))
     channel = reaction.message.channel
     if user.name == "J.A.R.V.I.S.":
         return
@@ -56,14 +59,16 @@ async def on_reaction_remove(reaction,user):
     await channel.send('{} has removed {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
 
 async def reminder(ctx, l):
-    print(l)
     set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
     initial_time = dt.datetime.now()
     wait = (set_time - initial_time).total_seconds()
     wait -= 600 
     await asyncio.sleep(wait)
     embed = discord.Embed(title="NOTICE: You Have a Meeting Scheduled in 10 Minutes.")
-    await ctx.message.channel.send(embed=embed)
+    # await ctx.message.channel.send(embed=embed)
+    result = re.sub('[^0-9]','',l[2])
+    user = await client.fetch_user(result)
+    await user.send("", embed=embed)
 
 def split(names):
     all = ''
@@ -74,6 +79,7 @@ def split(names):
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
+    # print(args)
     copy = args[:]
     if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
