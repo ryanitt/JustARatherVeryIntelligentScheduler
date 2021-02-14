@@ -4,6 +4,7 @@ import time
 import threading
 from discord.enums import Status
 from discord.ext import commands
+import asyncio
 import db
 
 database = db.DataBase()
@@ -51,12 +52,14 @@ async def reminder(ctx, l):
     initial_time = dt.datetime.now()
     wait = (set_time - initial_time).total_seconds()
     wait -= 600 
-    t= threading.Timer(wait, await print_reminder(wait, ctx))
-    t.start() 
-
-async def print_reminder(wait, ctx):
+    await asyncio.sleep(wait)
     embed = discord.Embed(title="NOTICE: You Have a Meeting Scheduled in 10 Minutes.")
     await ctx.message.channel.send(embed=embed)
+
+
+#async def print_reminder(wait, ctx):
+   # embed = discord.Embed(title="NOTICE: You Have a Meeting Scheduled in 10 Minutes.")
+    #await ctx.message.channel.send(embed=embed)
 
 
 
