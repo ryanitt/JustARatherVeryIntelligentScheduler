@@ -6,7 +6,7 @@ class DataBase:
         self.mydb = mysql.connector.connect(
                     host="localhost",
                     user="root",
-                    password="Bestintentions56*",
+                    password="vanessa123*",
                     database="jarvisfc"
                     )
         self.mycursor = self.mydb.cursor(buffered=True)
@@ -139,7 +139,7 @@ class DataBase:
         for x in self.mycursor:
             print(x)
 
-    def displayMeetings(self):
+    def allDisplayMeetings(self):
         self.mycursor.execute("SELECT * FROM meetings ORDER BY time")
         returnStr = ""
         for x in self.mycursor:
@@ -147,6 +147,9 @@ class DataBase:
             returnStr = returnStr + x[1] + " " + x[2].strftime("%m/%d/%Y, %H:%M") + "\n"
         
         return returnStr.rstrip()
+
+    # def personalMeetings(self):
+    #     self.mycursor.execute("SELECT * FROM meetings ORDER BY time")
 
 
 
