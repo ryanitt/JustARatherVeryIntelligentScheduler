@@ -107,14 +107,16 @@ async def allSchedule(ctx):
     await ctx.message.channel.send(embed=embed)
 
 @client.command()
-async def mySchedule(ctx, user):
+async def mySchedule(ctx):
     embed = discord.Embed(title="Displaying Personal Meetings", color=0xFF00FF)
-    ID = "<@!" + str(user.id) + ">"
+    ID = "<@!" + str(ctx.message.author.id) + ">"
+    # print(ID)
     meetingsList = database.personalMeetings(ID).split("\n")
-    name = ""
+    topic = ""
     date = ""
     for i in meetingsList:
         tempList = i.split(" ")
+        # print(tempList)
         topic = topic + tempList[0] + "\n"
         date = date + tempList[1] + tempList[2] + "\n"
     embed.add_field(name="Meeting Topic", value=topic, inline=True)
@@ -129,7 +131,8 @@ async def commands(context):
     helplist = discord.Embed(title="Commands", description="Prefix for all commands is #", color=0xFF00FF)
     helplist.add_field(name="commands", value="Shows commands.", inline=True)
     helplist.add_field(name="setup", value = "Commands for setting up group meetings", inline=False)
-    helplist.add_field(name="allSchedule", value="Command to view upcoming meetings in order (soonest to furthest)", inline=False)
+    helplist.add_field(name="allSchedule", value="Command to view all upcoming meetings in order (soonest to furthest)", inline=False)
+    helplist.add_field(name="mySchedule", value="Command to view personal upcoming confirmed meetings (soonest to furthest).", inline=False)
     await context.message.channel.send(embed = helplist)
 #Run the client on the server
 client.run(token)

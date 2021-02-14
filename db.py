@@ -171,7 +171,7 @@ class DataBase:
         for x in self.mycursor:
             x = list(x)
             returnStr += x[0] + " " + x[1].strftime("%m/%d/%Y, %H:%M") + "\n"
-        return returnStr
+        return returnStr.rstrip()
 
 
 
