@@ -6,8 +6,8 @@ class DataBase:
         self.mydb = mysql.connector.connect(
                     host="localhost",
                     user="root",
-                    password="vanessa123",
-                    database="jarvisfc"
+                    password="Yamahar6$",
+                    database="jarvisbb"
                     )
         self.mycursor = self.mydb.cursor(buffered=True)
 
