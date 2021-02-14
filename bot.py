@@ -2,7 +2,7 @@ import discord
 import datetime as dt
 import time
 from discord.ext import commands
-import db 
+import db
 
 database = db.DataBase()
 
@@ -11,7 +11,6 @@ client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
 client.remove_command("help")
 token = input("Enter Token")
-
 
 def setupDB():
     database.createTables()
@@ -37,6 +36,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    setupDB()
 
 
 @client.event
@@ -55,17 +55,14 @@ async def setup(context):
     embedder = discord.Embed(title = "Greetings, my name is J.A.R.V.I.S. (Just A Rather Very Intelligent Scheduler)")
     await context.message.channel.send(embed = embedder)
     
-    
-def sendtoDB(l):
+async def reminder(ctx,l):
     print(l)
     set_time = dt.datetime.strptime(l[0],"%Y-%m-%d %H:%M")
     initial_time = dt.datetime.now()
     wait = (set_time - initial_time).total_seconds()
     time.sleep(wait)
-    print("reminder")
-    
+    await ctx.channel.send("Reminder!")
 
-            
 def split(names):
     all = ''
     for i in names:
@@ -99,8 +96,8 @@ async def setup(ctx, *args):
     embed.add_field(name='Names',value= split(args) ,inline=True)
     await ctx.message.channel.send(embed = embed)
 
-@client.command("meeting")
-async def meeting(context):
+@client.command()
+async def meeting(ctx):
     embed = discord.Embed(title="Displaying current meetings", color=0xFF00FF)
     #
     #for i in database.showINFO?
