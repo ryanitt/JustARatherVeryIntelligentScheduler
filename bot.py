@@ -100,8 +100,6 @@ async def setup(ctx, *args):
             database.createPerson(p)
             database.createAttendence(p, args[1])
         database.saveToDB()
-
-
     embed = discord.Embed(title="Meeting Information", color=0xFF00FF)
     embed.add_field(name="Date-Time", value=args[0], inline=True)
     embed.add_field(name="Location", value=args[1], inline=True)
@@ -110,10 +108,12 @@ async def setup(ctx, *args):
     embed.add_field(name='Names',value= split(args) ,inline=True)
     await ctx.message.channel.send(embed = embed)
 
-
 @client.command("meeting")
 async def meeting(context):
-    await context.send("A meeting has been requested. React to this message to RSVP.")
+    embed = discord.Embed(title="Displaying current meetings", color=0xFF00FF)
+    #
+    #for i in database.showINFO?
+        #embed.add_field(name="Meeting: " + i, ...)
 
 # My Help Button
 @client.command("commands")
@@ -121,8 +121,8 @@ async def commands(context):
     msg = client.get_channel(client_id)
     helplist = discord.Embed(title="Commands", description="Prefix for all commands is #", color=0xFF00FF)
     helplist.add_field(name="commands", value="Shows commands.", inline=True)
-    helplist.add_field(name="status", value = "Gives status of Account", inline=False)
-    helplist.add_field(name="meeting", value="Meeting stuff.", inline=False)
+    helplist.add_field(name="setup", value = "Commands for setting up group meetings", inline=False)
+    helplist.add_field(name="meeting", value="Command to view or edit ongoing meetings", inline=False)
     await context.message.channel.send(embed = helplist)
 #Run the client on the server
 client.run(token)
