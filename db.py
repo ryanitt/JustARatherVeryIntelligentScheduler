@@ -54,10 +54,9 @@ class DataBase:
 
         if not created:
             self.mycursor.execute("CREATE TABLE attendence (\
-                            pNo INTEGER,\
+                            pNo VARCHAR(255),\
                             mNo INTEGER,\
                             PRIMARY KEY (pNo, mNo),\
-                            FOREIGN KEY(pNo) REFERENCES persons(id),\
                             FOREIGN KEY(mNo) REFERENCES meetings(id)\
                             );")      
             print('created attendence')
@@ -73,7 +72,12 @@ class DataBase:
         sql = "INSERT INTO meetings (name, time) VALUES (%s, %s);"
         val = (name, meeting_date)
         self.mycursor.execute(sql, val)
-        
+
+    def createMeeting(self, name, time):
+        sql = "INSERT INTO meetings (name, time) VALUES (%s, %s);"
+        val = (name, time)
+        self.mycursor.execute(sql, val)
+
     def createPerson(self, disc):
         sql = "INSERT INTO persons (clientID) VALUES (%s)"
         val = (disc,)
@@ -111,6 +115,12 @@ if __name__ == "__main__":
     db.createMeeting("meeting 3", 1999, 3, 2, 2, 00)
     db.createMeeting("meeting 4", 2000, 4, 3, 15, 15)
     db.createPerson("<@!103683474916925440>")
+    db.createPerson("<@!216745727857131520>")
+    db.createPerson("<@!128311377767956481>")
+    
     db.createAttendence("<@!103683474916925440>", "meeting 1")
+    db.createAttendence("<@!216745727857131520>", "meeting 3")
+    db.createAttendence("<@!128311377767956481>", "meeting 2")
+    db.createAttendence("<@!216745727857131520>", "meeting 4")
     db.showInfo()
     db.saveToDB()

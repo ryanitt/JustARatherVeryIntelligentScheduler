@@ -11,6 +11,24 @@ client_id = 810231896524193833
 client.remove_command("help")
 token = input("Enter Token")
 
+
+def setupDB():
+    database.createTables()
+    # database.createMeeting("meeting 1", 1997, 1, 31, 13, 45)
+    # database.createMeeting("meeting 2", 1998, 2, 1, 7, 30)
+    # database.createMeeting("meeting 3", 1999, 3, 2, 2, 00)
+    # database.createMeeting("meeting 4", 2000, 4, 3, 15, 15)
+    # database.createPerson("<@!103683474916925440>")
+    # database.createPerson("<@!216745727857131520>")
+    # database.createPerson("<@!128311377767956481>")
+    
+    # database.createAttendence("<@!103683474916925440>", "meeting 1")
+    # database.createAttendence("<@!216745727857131520>", "meeting 3")
+    # database.createAttendence("<@!128311377767956481>", "meeting 2")
+    # database.createAttendence("<@!216745727857131520>", "meeting 4")
+    # database.showInfo()
+    database.saveToDB()
+
 @client.event
 async def on_ready():
     msg = client.get_channel(client_id)
@@ -19,22 +37,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-def setupDB():
-    database = db.DataBase()
-    database.createTables()
-    database.createMeeting("meeting 1", 1997, 1, 31, 13, 45)
-    database.createMeeting("meeting 2", 1998, 2, 1, 7, 30)
-    database.createMeeting("meeting 3", 1999, 3, 2, 2, 00)
-    database.createMeeting("meeting 4", 2000, 4, 3, 15, 15)
-    database.createPerson("Question", "0874")
-    database.createPerson("Rice", "2405")
-    database.createPerson("FunkyPants4457", "6186")
-    database.createPerson("chendaddy15", "6336")
-    database.createPerson("Kurozinx", "7652")
-    database.createAttendence("Rice", "2405", "meeting 1")
-    database.showInfo()
-    database.saveToDB()
-
+    setupDB()
 
 def sendtoDB(l):
     # print(l)
@@ -91,13 +94,19 @@ async def setup(ctx, *args):
         embed.add_field(name="Additional Arguments: Names", value="You can enter as many names as you want as command line arguments after the first two.")
         embed.add_field(name="When Ready", value="Create a meeting by using #setup time location names....")
         await ctx.message.channel.send(embed=embed)
-    
+    elif len(args) >= 3:
+        database.createMeeting(args[1], args[0])
+        for p in args[2:]:
+            database.createPerson(p)
+            database.createAttendence(p, args[1])
+        database.saveToDB()
+
+
     embed = discord.Embed(title="Meeting Information", color=0xFF00FF)
     embed.add_field(name="Date-Time", value=args[0], inline=True)
     embed.add_field(name="Location", value=args[1], inline=True)
     args.pop(0)
     args.pop(0)
-    print(split(args))
     embed.add_field(name='Names',value= split(args) ,inline=True)
     await ctx.message.channel.send(embed = embed)
 
