@@ -56,6 +56,7 @@ class DataBase:
             self.mycursor.execute("CREATE TABLE attendance (\
                             pNo VARCHAR(255),\
                             mNo INTEGER,\
+                            status VARCHAR(255),\
                             PRIMARY KEY (pNo, mNo),\
                             FOREIGN KEY(mNo) REFERENCES meetings(id)\
                             );")      
@@ -111,10 +112,23 @@ class DataBase:
         meeting = self.mycursor.fetchone()
         print(meeting)
 
-        sql = "INSERT INTO attendance (pNo, mNo) VALUES (%s, %s)"
+        sql = "INSERT INTO attendance (pNo, mNo, status) VALUES (%s, %s, maybe)"
         val = (disc, meeting[0])
         print(sql, val)
         self.mycursor.execute(sql, val)
+
+    def changeStatus(self, disc, meetingName, newStatus):
+        sql  = "SELECT * FROM meetings WHERE name = %s"
+        tpc = (meetingName,)
+        self.mycursor.execute(sql, tpc)
+        meeting = self.mycursor.fetchone()
+        print(meeting)
+
+        sql = "UPDATE attendance SET status = %s WHERE pNo = %s AND mNo = %s)"
+        val = (newStatus, disc, meeting[0])
+        print(sql, val)
+        self.mycursor.execute(sql, val)
+
 
     def showInfo(self):
         self.mycursor.execute("SELECT * FROM meetings")
