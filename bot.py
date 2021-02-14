@@ -1,51 +1,61 @@
 import discord
+import datetime as dt
 from discord.ext import commands
-#client (our bot)
-
-#client = discord.Client() #### old client getter
 client = commands.Bot(command_prefix = '#')
 client_id = 810231896524193833
+client.remove_command("help")
 token = input("Enter Token")
-
-@client.command(name="version")
-async def Version(context):
-    msg = client.get_channel(client_id)
-    embedder = discord.Embed(title="Current Version", description="Alpha")
-    embedder.add_field(name="Version code:", value="Alpha.a.1", inline=False)
-    embedder.add_field(name="Release Date", value="Feburary 2021", inline = False)
-
-    await context.message.channel.send(embed = embedder)
 
 @client.event
 async def on_ready():
-
-    #Do stuff/// (once bot is done I will need to change id channel)
     msg = client.get_channel(client_id)
-    await msg.send("Hello, I am JARVIS, your personal secretary.")
-    await msg.send("Input '#Meeting' inorder to set up a meeting with your peers.")
-@client.event
-@client.event
-async def on_message(message):
+    print('Logged in as')
+    print(client.user.name)
+    print(client.user.id)
+    print('------')
 
-    if message.content == "Meeting":
-        msg = client.get_channel(client_id)
-        await msg.send("A meeting has been requested. React to this message to RSVP")
-    await client.process_commands(message)
+def sendtoDB(l):
+    print(l)
+    print(l[0])
+    print(dt.datetime.now().strftime("%Y-%m-%d %H:%M"))
+    run = True
+    while True:
+        if dt.datetime.now().strftime("%Y-%m-%d %H:%M") == l[0]:
+            
+            break
+            
+def split(names):
+    all = ''
+    for i in names:
+        all = all + i
+    return all
+
+@client.command()
+async def setup(ctx, *args):
+    args = list(args)
+    print(args[0],args[1])
+    for_ryan = args
+    sendtoDB(for_ryan)
+    if len(args) <= 1:
+        embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
+        embed.add_field(name="First Argument: Date Time", value="Please enter date-time value (year-month-day hour:minute")
+        embed.add_field(name="Second Argument: Location", value="Please enter location as second argument as one word or containted within " "")
+        embed.add_field(name="Additional Arguments: Names", value="You can enter as many names as you want as command line arguments after the first two.")
+        embed.add_field(name="When Ready", value="Create a meeting by using #setup time location names....")
+        await ctx.message.channel.send(embed=embed)
     
-
-#@client.command()
+    embed = discord.Embed(title="Meeting Information", color=0xFF00FF)
+    embed.add_field(name="Date-Time", value=args[0], inline=True)
+    embed.add_field(name="Location", value=args[1], inline=True)
+    args.pop(0)
+    args.pop(0)
+    embed.add_field(name='Names',value= split(args) ,inline=True)
+    await ctx.message.channel.send(embed = embed)
 
 @client.command("meeting")
 async def meeting(context):
     await context.send("A meeting has been requested. React to this message to RSVP.")
 
-
-@client.command("returnoftheking")
-async def returnoftheking(context):
-    await context.send("https://support.riotgames.com/hc/en-us/requests/new")
-    await context.send("Let's bring the king home!")
-
-   
 # My Help Button
 @client.command("commands")
 async def commands(context):
@@ -53,7 +63,6 @@ async def commands(context):
     helplist = discord.Embed(title="Commands", description="Prefix for all commands is #", color=0xFF00FF)
     helplist.add_field(name="commands", value="Shows commands.", inline=True)
     helplist.add_field(name="status", value = "Gives status of Account", inline=False)
-    helplist.add_field(name="version", value="Shows the version.", inline=False)
     helplist.add_field(name="meeting", value="Meeting stuff.", inline=False)
     await context.message.channel.send(embed = helplist)
 #Run the client on the server
