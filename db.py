@@ -5,8 +5,8 @@ class DataBase:
     def __init__(self):
         self.mydb = mysql.connector.connect(
                     host="localhost",
-                    user="root",
-                    password="Bestintentions56*",
+                    user="mainAd",
+                    password="K3nnyisjeonmayer",
                     database="jarvisfc"
                     )
         self.mycursor = self.mydb.cursor(buffered=True)
@@ -124,10 +124,15 @@ class DataBase:
         meeting = self.mycursor.fetchone()
         print(meeting)
 
-        sql = "UPDATE attendance SET status = %s WHERE pNo = %s AND mNo = %s)"
+        sql = "UPDATE attendance SET status = %s WHERE pNo = %s AND mNo = %s"
         val = (newStatus, disc, meeting[0])
         print(sql, val)
         self.mycursor.execute(sql, val)
+
+        self.mydb.commit()
+
+        print(self.mycursor.rowcount, " record(s) changed")
+        
 
 
     def showInfo(self):

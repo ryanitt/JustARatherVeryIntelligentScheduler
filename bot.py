@@ -38,6 +38,10 @@ async def on_reaction_add(reaction,user):
         return
     await channel.send('{} has confirmed attendance!'.format(user.name))#,reaction.emoji, reaction.message.content))
     print(user)
+    ID = "<@!" + str(user.id) + ">"
+
+    database.changeStatus(ID, reaction.message.embeds[0].fields[1].value, "yes")
+
 
 @client.event
 async def on_reaction_remove(reaction,user):
