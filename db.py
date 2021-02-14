@@ -25,7 +25,7 @@ class DataBase:
         if not created:
             self.mycursor.execute("CREATE TABLE meetings (\
                             id INTEGER NOT NULL AUTO_INCREMENT,\
-                            name VARCHAR(255),\
+                            name VARCHAR(255) UNIQUE,\
                             time DATETIME,\
                             PRIMARY KEY (id)\
                             );")
@@ -74,6 +74,14 @@ class DataBase:
     #     self.mycursor.execute(sql, val)
 
     def createMeeting(self, name, time):
+        sql = "SELECT * FROM meetings WHERE name = %s"
+        val = (name,)
+        self.mycursor.execute(sql, val)
+
+        if(self.mycursor.rowcount > 0):
+            print("meeting already exists: ", name)
+            return
+
         sql = "INSERT INTO meetings (name, time) VALUES (%s, %s);"
         val = (name, time)
         self.mycursor.execute(sql, val)
@@ -106,7 +114,7 @@ class DataBase:
         meeting = self.mycursor.fetchone()
         print(meeting)
 
-        sql = "INSERT IGNORE INTO attendence (pNo, mNo) VALUES (%s, %s)"
+        sql = "INSERT INTO attendence (pNo, mNo) VALUES (%s, %s)"
         val = (disc, meeting[0])
         print(sql, val)
         self.mycursor.execute(sql, val)
