@@ -51,10 +51,10 @@ async def on_reaction_add(reaction,user):
     
     print(user)
 
-@client.event
-async def on_reaction_remove(reaction,user):
-    channel = reaction.message.channel
-    await channel.send('{} has removed {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
+# @client.event
+# async def on_reaction_remove(reaction,user):
+#     channel = reaction.message.channel
+#     await channel.send('{} has removed {} to the message: {}'.format(user.name,reaction.emoji, reaction.message.content))
 
 @client.command("hello")
 async def setup(context):
