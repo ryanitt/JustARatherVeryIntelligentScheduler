@@ -75,7 +75,7 @@ async def setup(ctx, *args):
     args = list(args)
     print(args)
     copy = args
-    await reminder(ctx, copy)
+    await reminder(ctx,copy)
     if len(args) <= 1:
         embed = discord.Embed(title="Meeting Instructions", color=0xFF22FF)
         embed.add_field(name="First Argument: Date Time", value="Please enter date-time value (year-month-day hour:minute")
