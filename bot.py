@@ -24,10 +24,16 @@ def sendtoDB(l):
             
             break
             
+def split(names):
+    all = ''
+    for i in names:
+        all = all + i
+    return all
 
 @client.command()
 async def setup(ctx, *args):
     args = list(args)
+    print(args[0],args[1])
     for_ryan = args
     sendtoDB(for_ryan)
     if len(args) <= 1:
@@ -43,12 +49,8 @@ async def setup(ctx, *args):
     embed.add_field(name="Location", value=args[1], inline=True)
     args.pop(0)
     args.pop(0)
-    embed.add_field(name='Names',value=args,inline=True )
+    embed.add_field(name='Names',value= split(args) ,inline=True)
     await ctx.message.channel.send(embed = embed)
-
-
-    
-
 
 @client.command("meeting")
 async def meeting(context):
